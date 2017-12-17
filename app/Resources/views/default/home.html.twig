@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Homepage</h1>
+    {% if is_granted('ROLE_USER') %}
+        <h2>Administration</h2>
+            <a href="{{ path('dashboard') }}">Dashboard</a>
+            <br>
+            <a href="{{ path('admin') }}">EasyAdmin</a>
+    {% endif%}
+    <h2>Index</h2>
+        <a href="{{ path('fiche_index') }}">Fiche</a>
+        <br>
+        <a href="{{ path('manager_index') }}">Manager</a>
+        <br>
+        <a href="{{ path('projet_index') }}">Projet</a>  
+    <h2>Option</h2>
+        <a href="{{ path('hello') }}">Bonjour</a> 
+    <h2>Logout</h2>
+        <a href="{{ path('logout') }}">Déconnexion</a>
+{% endblock %}
+

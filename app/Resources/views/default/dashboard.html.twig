@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<style>
+.tableaux{
+  display:inline-block;
+  vertical-align:top;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+    <h1>Dashboard</h1>
+    <div class="tableaux">
+        <h2>Projets list</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Projetname</th>
+                    <th>Datebegin</th>
+                    <th>Dateend</th>
+                    <th>Filtre</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for projet in projets %}
+                <tr>
+                    <td><a href="{{ path('projet_show', { 'id': projet.id }) }}">{{ projet.id }}</a></td>
+                    <td>{{ projet.projetName }}</td>
+                    <td>{% if projet.dateBegin %}{{ projet.dateBegin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if projet.dateEnd %}{{ projet.dateEnd|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td><a href="{{ path('dashboardId', { 'id': projet.id }) }}">Filtrer par ce projet</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <ul>
+            <li>
+                <a href="{{ path('projet_index') }}">Projet board</a>
+                <a href="{{ path('dashboard') }}"> <input type="button" value="Reset filter"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="tableaux">
+        <h2>Managers list</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for manager in managers %}
+                <tr>
+                    <td><a href="{{ path('manager_show', { 'id': manager.id }) }}">{{ manager.id }}</a></td>
+                    <td>{{ manager.firstName }}</td>
+                    <td>{{ manager.lastName }}</td>
+                    <td>{{ manager.title }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <ul>
+        <li>
+            <a href="{{ path('manager_index') }}">Manager board</a>
+        </li>
+    </ul>
+    </div>
+        
+    <h2>Fiches list</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Projet</th>
+                    <th>Date</th>
+                    <th>Nbjoursfait</th>
+                    <th>Nbjoursvendus</th>
+                    <th>Pourcentconsommé</th>
+                    <th>Pourcentavancement</th>
+                    <th>Createby</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for fiche in fiches %}
+                <tr>
+                    <td><a href="{{ path('fiche_show', { 'id': fiche.id }) }}">{{ fiche.id }}</a></td>
+                    <td>{{ fiche.projetEx }}</td>
+                    <td>{% if fiche.date %}{{ fiche.date|date('Y-m-d') }}{% endif %}</td>
+                    <td>{{ fiche.nbJoursFait }}</td>
+                    <td>{{ fiche.nbJoursVendus }}</td>
+                    <td>{{ (fiche.nbJoursFait * 100) / fiche.nbJoursVendus }}</td>
+                    <td>{{ fiche.pourcentAvancement }}</td>
+                    <td>{{ fiche.manager }}</td>
+                    <td>{{ fiche.comment }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <ul>
+            <li>
+                <a href="{{ path('fiche_index') }}">Fiche board</a>
+            </li>
+        </ul>
+            
+        <a href="{{ path('home') }}">Homepage</a> 
+        <br>
+        <a href="{{ path('logout') }}">Déconnexion</a>
+{% endblock %}
+

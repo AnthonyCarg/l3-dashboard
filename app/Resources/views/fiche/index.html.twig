@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<style>
+body {
+    background-image: url("{{ backgroundUrl }}");
+}
+</style>    
+    
+    <h1>Fiches list</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Projet</th>
+                <th>Date</th>
+                <th>Nbjoursfait</th>
+                <th>Nbjoursvendus</th>
+                <th>Pourcentavancement</th>
+                <th>Createby</th>
+                <th>Comment</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for fiche in fiches %}
+            <tr>
+                <td><a href="{{ path('fiche_show', { 'id': fiche.id }) }}">{{ fiche.id }}</a></td>
+                <td>{{ fiche.projetEx }}</td>
+                <td>{% if fiche.date %}{{ fiche.date|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ fiche.nbJoursFait }}</td>
+                <td>{{ fiche.nbJoursVendus }}</td>
+                <td>{{ fiche.pourcentAvancement }}</td>
+                <td>{{ fiche.manager }}</td>
+                <td>{{ fiche.comment }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('fiche_show', { 'id': fiche.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('fiche_edit', { 'id': fiche.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('fiche_new') }}">Create a new fiche</a>
+        </li>
+    </ul>
+    <a href="{{ path('logout') }}">Déconnexion</a>
+{% endblock %}
